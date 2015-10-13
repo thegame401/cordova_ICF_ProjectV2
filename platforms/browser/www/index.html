@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *">-->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.5.min.css" charset="utf-8">
+    <link href="vendor/waves/waves.min.css" rel="stylesheet" />
+    <link href="vendor/wow/animate.css" rel="stylesheet" />
+    <link href="css/nativedroid2.css" rel="stylesheet" />
+    <!--<link href="css/nativedroid2.color.deep-orange.css" rel="stylesheet" />-->
+    <!--<link rel="stylesheet" type="text/css" href="css/cssTesting1.css" charset="utf-8" />-->
+    
+    <title>ICF Andriod V.1.0</title>
+</head>
+<body>
+    <style>
+        #otherTxt {
+            float: left;
+            position: relative;
+            left: 0px;
+            top: 0px;
+            border: 1px solid #000
+        }
+
+        div.ui-input-text {
+            height: 36px;
+            position: relative;
+        }
+
+        #ajaxLoadScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: #000;
+            opacity: 0.8;
+            z-index: 1000000;
+            height: 100vh;
+            filter: alpha(opacity=70);
+            align: center;
+        }
+
+        #loadingImg {
+            width: 220px;
+            height: 19px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin: -10px 0 0 -110px;
+        }
+    </style>
+    
+    <div data-role="page" id="login">
+        <div class="ui-content">
+            <h1>
+                ICF Android Version
+            </h1>
+            Username : <input id="userName" data-inline="true" placeholder="Username"><br />
+            Password : <input id="passWord" data-inline="true" type="password" placeholder="Password"><br />
+            <input type="button" value="เข้าสู่ระบบ" id="loginButton" />
+        </div>
+    </div>
+    <!--Main Page-->
+    <div data-role="page" id="home">
+        <div data-role="header" data-position="fixed">
+            <a href="#leftpanel" class="ui-btn ui-btn-left" ><i class="zmdi zmdi-menu"></i></a>
+            <h1>เลือกผู้สูงอายุ</h1>
+        </div>
+        <div class="ui-content" role="main">
+            <input id="searchData" class="ui-btn ui-btn-right" data-type="search" placeholder="ค้นหาผู้พิการด้วยชื่อ/นามสกุล/เลขบัตรประจำตัวประชาชน">
+            <ul data-role="listview" data-icon="false" data-inset="false" id="dataTableSeatch" >
+                
+            </ul>
+        </div>
+        <div data-role="footer" data-position="fixed" >
+            <div class="row center-xs">
+                <div class="col-xs-4">
+                    <div class="box">
+                        <p id="ModeOn"></p>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="box">
+                        <a id="uploadData" class="ui-btn ui-mini nd2-btn-icon-block"><i class='zmdi zmdi-cloud-upload'></i> UPLOAD ข้อมูล</a>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="box">
+                        <a id="logout" class="ui-btn ui-mini nd2-btn-icon-block"><i class='zmdi zmdi-minus'></i> LOGOUT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="profile">
+        <div data-role="header" data-position="fixed">
+            <a href="#home" class="ui-btn ui-btn-left" data-transition="slide" data-direction="reverse"><i class="zmdi zmdi-home"></i></a>
+            <h1 id="headerProfile"></h1>
+            <a href="#icf" class="ui-btn ui-btn-right" data-transition="slide"><i class="zmdi zmdi-play"></i></a>
+        </div>
+        <div class="ui-content">
+            <table data-role="table" class="ui-responsive table-stroke ui-table ui-table-columntoggle" id="personProfile"></table>
+            <br />
+            <strong>ประวัติการตอบแบบสอบถามออฟไลน์</strong>
+            <table class="ui-responsive table-stroke ui-table ui-table-columntoggle" id="personicfRecord"></table>
+        </div>
+        <div data-role="footer" data-position="fixed">
+            <div class="row center-xs">
+                <div class="col-xs-4">
+                    <div class="box">
+                        <a href="#home" data-transition="slide" data-direction="reverse"  class="ui-btn ui-mini nd2-btn-icon-block"> <i class='zmdi zmdi-home'></i>กลับสู่หน้าหลัก</a>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="box">
+
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="box">
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="icf">
+        <div data-role="header" data-position="fixed">
+            <a href="#profile" class="ui-btn ui-btn-left" data-transition="slide" data-direction="reverse"><i class="zmdi zmdi-accounts-alt"></i></a>
+            <h1 id="headericf"></h1>
+        </div>
+        <div class="ui-content">
+            <p>ข้อที่ <span id="currentQ"></span> / <span id="maxQ"></span></p>
+            <input type="range" name="slider-2" id="slider-2" data-highlight="true" min="0" max="100" value="2">
+            <fieldset data-role="controlgroup" id="icfform"></fieldset>
+        </div>
+        <div data-role="footer" data-position="fixed">
+            <div class="row center-xs">
+                <div class="col-xs-4">
+                    <div class="box">
+                        <a href="#home" data-transition="slide" data-direction="reverse" class="ui-btn ui-mini nd2-btn-icon-block"> <i class='zmdi zmdi-home'></i>กลับสู่หน้าหลัก</a>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="box">
+                        <a id="prev" onclick="prevQuestion();" class="ui-btn ui-mini nd2-btn-icon-block"> <i class='zmdi zmdi-arrow-left'></i>คำถามก่อนหน้า</a>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="box">
+                        <a id="next" onclick="nextQuestion();" class="ui-btn ui-mini nd2-btn-icon-block"> <i class='zmdi zmdi-arrow-right'></i>คำถามต่อไป</a>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="box">
+                        <!--<a href="#home" data-transition="slide" data-direction="reverse" class="ui-btn ui-mini nd2-btn-icon-block"> <i class='zmdi zmdi-home'></i>กลับสู่หน้าหลัก</a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/jquery-1.11.3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js" charset="utf-8"></script>
+    <script src="cordova.js"></script>
+    <script src="vendor/waves/waves.min.js"></script>
+    <script src="vendor/wow/wow.min.js"></script>
+    <script src="js/nativedroid2.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.example.hellocordova"
+        },
+        "org.apache.cordova.network-information": {
+            "PACKAGE_NAME": "com.example.hellocordova"
+        },
+        "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.example.hellocordova"
+        }
+    },
+    "dependent_plugins": {}
+}
